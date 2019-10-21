@@ -10,8 +10,8 @@ class Card:
         self.y = y
         self.w = w
         self.h = h
+        self.location = "S"
         self.move = False   # Boolean to check if moving the image is toggled
-        self.zoom_bool = False   # Whether or not tro draw the zoomed up version
         self.image = pygame.image.load(image)
         self.unzoomed = pygame.transform.scale(self.image, (self.w, self.h))
         self.zoomed = pygame.transform.scale(self.image, (300, 400))
@@ -37,8 +37,7 @@ class Card:
         self.x = pos[0] - self.w/2
         self.y = pos[1] - self.h/2
 
-        if event.type == pygame.MOUSEBUTTONUP: self.move = False
-
+        if event.type == pygame.MOUSEBUTTONUP: self.move = False  # Basically stops movement and resets card to be still
 
     # First checks to see if within boarder
     # Then checks to see if "e" is held down
@@ -48,4 +47,5 @@ class Card:
         if self.within_boarder(pos):
             keys = pygame.key.get_pressed()
             if keys[pygame.K_e]:
-                return True
+                # return True
+                self.draw_zoom()
