@@ -10,18 +10,19 @@ class Card:
         self.y = y
         self.w = w
         self.h = h
-        self.location = "S"
+        self.location = ""
         self.move = False   # Boolean to check if moving the image is toggled
-        self.image = pygame.image.load(image)
-        self.unzoomed = pygame.transform.scale(self.image, (self.w, self.h))
-        self.zoomed = pygame.transform.scale(self.image, (300, 400))
+        self.image = image
 
-    def draw_unzoom(self):  # Actually draw the object
-        display_surface.blit(self.unzoomed, (self.x, self.y))
+    def set_id(self, id):
+        self.id = id
 
-    def draw_zoom(self):
+    def draw_unzoom(self, loaded):  # Actually draw the object
+        display_surface.blit(pygame.transform.scale(loaded, (self.w, self.h)), (self.x, self.y))
+
+    def draw_zoom(self, loaded):  # Display Zoomed up version
         w, h = pygame.display.get_surface().get_size()
-        display_surface.blit(self.zoomed, (w / 2 - 300 / 2, h / 2 - 400 / 2))
+        display_surface.blit(pygame.transform.scale(loaded, (300, 400)), (w / 2 - 300 / 2, h / 2 - 400 / 2))
 
     def within_boarder(self, pos):  # Border check for seeing if mouse click is within boarder
         mx, my = pos
@@ -31,21 +32,33 @@ class Card:
 
         return False  # Not clicking it
 
-    def move_to(self, event):  # Transition from "within_boarder" where we now move the image
+    def move_to(self, event):  # Checks to see if movement is possible and also if to execute movement of a card
         # Update coords
-        pos = pygame.mouse.get_pos()
-        self.x = pos[0] - self.w/2
-        self.y = pos[1] - self.h/2
 
-        if event.type == pygame.MOUSEBUTTONUP: self.move = False  # Basically stops movement and resets card to be still
+        # See if to start movement
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            if self.within_boarder(pos):
+                self.move = True
+
+        # See if to end movement (Only if movement was already activated)
+        elif event.type == pygame.MOUSEBUTTONUP:
+            self.move = False  # Basically stops movement and resets card to be still
+            return False    # Means that the movement is cut
+
+        # Actually edit coords and do movement
+        if self.move:
+            pos = pygame.mouse.get_pos()
+            self.x = pos[0] - self.w/2
+            self.y = pos[1] - self.h/2
+            return True     # Means that the movement continues
 
     # First checks to see if within boarder
     # Then checks to see if "e" is held down
     # If both satisfied, return True (Player is asking for a zoom)
-    def zoom_up(self):  # Zoom up on image (Check to see if "e" is pressed as a toggle)
+    def zoom_up(self, loaded):  # Zoom up on image (Check to see if "e" is pressed as a toggle)
         pos = pygame.mouse.get_pos()
         if self.within_boarder(pos):
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_e]:
-                # return True
-                self.draw_zoom()
+            if keys[pygame.K_e]:  # "e" key as the toggle is being pressed
+                self.draw_zoom(loaded)    # Draw zoomed up version
