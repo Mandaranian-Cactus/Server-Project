@@ -71,7 +71,7 @@ H = 650
 # Create the display surface object
 # of specific dimension..e(X, Y).
 display_surface = pygame.display.set_mode((W, H))
-image = pygame.image.load(r"C:\Users\dannie\PycharmProjects\untitled\Images\Layout.png")
+image = pygame.image.load(r"/home/robuntu/Thomas/Server-Project/layout.py")
 image = pygame.transform.scale(image, (900, 650))
 center = Layout(190, 185, 441, 253)
 private_hand = Layout(605, 480, 295, 170)  # NOTE THAT THE DECK CLASS PROB ISN'T THE MOST FITTING FOR THIS (Change later)
@@ -172,6 +172,8 @@ def draw():
 
 # infinite loop
 def main():
+
+    print("reeewer")
     while True:
         update()
         draw()
