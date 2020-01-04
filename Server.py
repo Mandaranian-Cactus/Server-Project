@@ -38,9 +38,9 @@ print("Waiting for a connection, Server Started")   # By this part, we have gott
 
 # Door deck
 door_deck = Deck()
-door_deck.add("Sun", Card(r"/home/robuntu/Thomas/Server-Project/Sun.png", 200, 200, 25, 40))
-door_deck.add("Spaghetti_Jesus", Card(r"/home/robuntu/Thomas/Server-Project/Spaghetti_Jesus.png", 300, 200, 25, 40))
-door_deck.add("FireHawk", Card(r"/home/robuntu/Thomas/Server-Project/FireHawk.png", 100, 200, 25, 40))
+door_deck.add("Sun", Card(r"C:\Users\dannie\PycharmProjects\untitled\Images\Cards\FireHawk.png", 200, 200, 25, 40))
+door_deck.add("Spaghetti_Jesus", Card(r"C:\Users\dannie\PycharmProjects\untitled\Images\Cards\Spaghetti_Jesus.png", 300, 200, 25, 40))
+door_deck.add("FireHawk", Card(r"C:\Users\dannie\PycharmProjects\untitled\Images\Cards\FireHawk.png", 100, 200, 25, 40))
 global_hand = {}    # All card registered on the board (Key is directory and value is the class)
 player_cnt = 0  # Number of players present
 
